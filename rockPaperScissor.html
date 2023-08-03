@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .hoverwhite:hover{
+            color: white;
+            background-color: yellowgreen !important;
+            transition-duration: 0.4s;
+            scale: 1.3;
+            z-index: 999;
+            cursor: pointer;
+            /* margin: 10px; */
+        }
+    </style>
+</head>
+<body class="bg-secondary " style="min-height: 100vh;">
+    
+    
+<div class="h1 px-0 p-2 text-center text-decoration-underline text-warning fw-bold">
+    Rock Paper Scissor
+</div>
+
+<div class="d-flex h2">
+<div id="score" class="text-white fw-bold">
+    Your Score : 0
+</div>
+</div>
+
+
+
+<div class=" container">
+    <div class="p-2" id="modalbody">
+      
+    </div>
+   </div>
+
+
+<div class="p-2 d-flex align-content-center justify-content-center">
+    <button type="button" class="btn btn-primary"  onclick="playnewgame();">
+        Play New Game
+      </button>
+</div>
+
+
+
+</body>
+</html>
+
+
+
+<script>
+
+    function playnewgame(){
+        document.getElementById('modalbody').innerHTML=`
+        <div class="card container shadow bg-primary">
+                <div class="row">
+                    <div class="col-sm-4 p-2">
+                        <div onclick="selectedstone();" class="card p-5 bg-white text-center m-5 hoverwhite">
+                            <i class="fa-solid fa-hill-rockslide fa-2xl"></i>
+                        </div>
+                    </div>
+                    <!-- rock ends here -->
+                    <div class="col-sm-4 p-2">
+                        <div onclick="selectedpaper()" class=" card p-5 bg-white text-center m-5 hover hoverwhite">
+                            <i class="fa-solid fa-newspaper fa-2xl"></i>
+                        </div>
+                    </div>
+                    <!-- paper ends here -->
+                    <div class="col-sm-4 p-2">
+                        <div onclick="selectedscissor()" class=" card p-5 bg-white text-center m-5 hoverwhite">
+                            <i class="fa-solid fa-scissors fa-2xl"></i>
+                        </div>
+                    </div>
+                    <!-- scissor ends here -->
+                </div>
+            </div>
+        `;
+        // score = 0;
+        showscore();
+    }
+
+    function showscore(){
+        document.getElementById('score').innerHTML=`Your Score : ${score}`;
+        console.log(`score ${score}`)
+    }
+
+    let randNum;
+    let score = 0;
+    function generaterand(){
+     randNum  =  Math.floor(Math.random() * 3) + 1;
+    }
+// 1 -> stone
+// 2-> Paper 
+// 3-> Scissor
+    function selectedstone(){
+        generaterand();
+        // console.log(randNum);
+
+        if(randNum == 1){
+            equal();
+        }
+        else if(randNum == 2){
+            lose();
+           
+        }else if(randNum ==3){
+            won();
+        }
+      
+    }
+
+    function selectedpaper(){
+        generaterand();
+        // console.log(randNum);
+
+        if(randNum == 1){
+            won();
+        }
+        else if(randNum == 2){
+            equal();
+        }else if(randNum ==3){
+            lose();
+        }
+      
+    }
+
+    function selectedscissor(){
+        generaterand();
+        // console.log(randNum);
+
+        if(randNum == 1){
+            lose();
+        }
+        else if(randNum == 2){
+            won();
+        }else if(randNum ==3){
+            equal();
+        }
+      
+    }
+
+    function equal(){
+        document.getElementById('modalbody').innerHTML=` 
+<div class="p-2">
+    <div class="card w-100 bg-warning p-2">
+        <div class="h3 text-white fw-bold text-center">
+            It's Draw !! 🤯🤯 <br>
+            <hr>
+            <div id="computerchoice" class="text-white" style="font-weight:100">
+                
+            </div>
+        </div>            
+    </div>
+</div>
+`;
+        showcompuetrchoice();
+    }
+
+    function won(){
+        score =  score + 1;
+        showscore();
+        document.getElementById('modalbody').innerHTML=` 
+<div class="p-2">
+    <div class="card w-100 bg-success p-2">
+        <div class="h3 text-white fw-bold text-center">
+            You won!! 🥳🎉🎉 <br>
+            <hr>
+            <div id="computerchoice" class="text-white" style="font-weight:100">
+                
+            </div>
+        </div>            
+    </div>
+</div>
+`;
+        showcompuetrchoice();
+    }
+
+    function lose(){
+        if(score != 0){
+              score =  score - 1;
+                showscore();
+            }
+        document.getElementById('modalbody').innerHTML=` 
+<div class="p-2">
+    <div class="card w-100 bg-danger p-2">
+        <div class="h3 text-white fw-bold text-center">
+            You lost!! 😞😥 <br>
+            <hr>
+            <div id="computerchoice" class="text-white" style="font-weight:100">
+                
+            </div>
+        </div>             
+    </div>
+</div>
+`;
+        showcompuetrchoice();
+    }
+
+function showcompuetrchoice(){
+    if(randNum == 1){
+        document.getElementById('computerchoice').innerHTML=`Computer Selected Stone 🪨`
+    }else if(randNum == 2){
+        document.getElementById('computerchoice').innerHTML=`Computer Selected Paper 📰`
+    }
+    else if(randNum == 3){
+        document.getElementById('computerchoice').innerHTML=`Computer Selected Scissor ✂️`
+    }
+}
+
+
+</script>
